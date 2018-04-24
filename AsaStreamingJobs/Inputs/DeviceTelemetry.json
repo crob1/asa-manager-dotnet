@@ -1,0 +1,23 @@
+﻿{
+  "Name": "DeviceTelemetry",
+  "Type": "Data Stream",
+  "DataSourceType": "IoT Hub",
+  "Sample": null,
+  "EventHubProperties": null,
+  "BlobStorageProperties": null,
+  "IoTHubProperties": {
+    "ConsumerGroupName": "$Default",
+    "IotHubNamespace": "iothub-pigug",
+    "SharedAccessPolicyKey": null,
+    "SharedAccessPolicyName": "iothubowner"
+  },
+  "BlobReferenceProperties": null,
+  "Serialization": {
+    "Encoding": "UTF8",
+    "Type": "Json",
+    "FieldDelimiter": null,
+    "Format": "LineSeparated"
+  },
+  "DataSourceCredentialDomain": "11493937-3740-4881-8af5-e415cdcdaf5a.StreamAnalyticsCredential",
+  "ScriptType": "Input"
+}

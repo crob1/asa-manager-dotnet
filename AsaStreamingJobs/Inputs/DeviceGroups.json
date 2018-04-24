@@ -1,0 +1,29 @@
+﻿{
+  "Name": "DeviceGroups",
+  "Type": "Reference data",
+  "DataSourceType": "Blob Storage",
+  "Sample": null,
+  "EventHubProperties": null,
+  "BlobStorageProperties": null,
+  "IoTHubProperties": null,
+  "BlobReferenceProperties": {
+    "Container": "referenceinput",
+    "DateFormat": "yyyy-MM-dd",
+    "PathPattern": "{date}/{time}/devicegroups.csv",
+    "StorageAccounts": [
+      {
+        "AccountKey": null,
+        "AccountName": "storagepigug"
+      }
+    ],
+    "TimeFormat": "HH-mm"
+  },
+  "Serialization": {
+    "Encoding": "UTF8",
+    "Type": "Csv",
+    "FieldDelimiter": ",",
+    "Format": null
+  },
+  "DataSourceCredentialDomain": "15f701b4-a300-4711-b06b-ce4044ace836.StreamAnalyticsCredential",
+  "ScriptType": "Input"
+}

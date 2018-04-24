@@ -1,0 +1,12 @@
+﻿{
+  "JSCode": "function main(record) {\r\n    if (record) {\r\n        record.IoTHub && delete record.IoTHub;\r\n        record.PartitionId && delete record.PartitionId;\r\n        record.EventEnqueuedUtcTime && delete record.EventEnqueuedUtcTime;\r\n        record.EventProcessedUtcTime && delete record.EventProcessedUtcTime;\r\n    }\r\n    return record;\r\n}",
+  "Name": "removeUnusedProperties",
+  "OutputType": "any",
+  "FunctionInputs": [
+    {
+      "DataType": "record",
+      "IsConfigurationParameter": null
+    }
+  ],
+  "ScriptType": "JSFunction"
+}

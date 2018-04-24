@@ -1,0 +1,8 @@
+﻿{
+  "InputAlias": "DeviceTelemetry",
+  "Type": "Data Stream",
+  "Format": "Json",
+  "FilePath": "D:\\workspace\\github\\Azure\\asa-manager-dotnet\\AsaStreamingJobs\\Samples\\devicetelemetry.json",
+  "Sample": "{\r\n  \"EventEnqueuedUtcTime\": \"2018-04-04T16:19:18.787Z\",\r\n  \"EventProcessedUtcTime\": \"2018-04-04T16:21:34.8285859Z\",\r\n  \"IoTHub\": {\r\n    \"ConnectionDeviceGenerationId\": \"636570705765671785\",\r\n    \"ConnectionDeviceId\": \"Simulated.chiller-01.0\",\r\n    \"CorrelationId\": null,\r\n    \"EnqueuedTime\": \"2018-04-04T16:19:18.538Z\",\r\n    \"MessageId\": null,\r\n    \"StreamId\": null\r\n  },\r\n  \"PartitionId\": 1,\r\n  \"humidity\": 72.2477195950913,\r\n  \"humidity_unit\": \"%\",\r\n  \"pressure\": 300,\r\n  \"pressure_unit\": \"psig\",\r\n  \"temperature\": 73.4001469040057,\r\n  \"temperature_unit\": \"F\"\r\n}",
+  "ScriptType": "InputMock"
+}

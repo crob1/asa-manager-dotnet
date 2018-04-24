@@ -1,0 +1,8 @@
+﻿{
+  "InputAlias": "DeviceGroups",
+  "Type": "Reference data",
+  "Format": "Csv",
+  "FilePath": "D:\\workspace\\github\\Azure\\asa-manager-dotnet\\AsaStreamingJobs\\Samples\\devicegroups.csv",
+  "Sample": "DeviceId,GroupId ",
+  "ScriptType": "InputMock"
+}

@@ -1,0 +1,29 @@
+﻿{
+  "Name": "Rules",
+  "Type": "Reference data",
+  "DataSourceType": "Blob Storage",
+  "Sample": null,
+  "EventHubProperties": null,
+  "BlobStorageProperties": null,
+  "IoTHubProperties": null,
+  "BlobReferenceProperties": {
+    "Container": "referenceinput",
+    "DateFormat": "yyyy-MM-dd",
+    "PathPattern": "{date}/{time}/rules.json",
+    "StorageAccounts": [
+      {
+        "AccountKey": null,
+        "AccountName": "storagepigug"
+      }
+    ],
+    "TimeFormat": "HH-mm"
+  },
+  "Serialization": {
+    "Encoding": "UTF8",
+    "Type": "Json",
+    "FieldDelimiter": null,
+    "Format": "LineSeparated"
+  },
+  "DataSourceCredentialDomain": "f4ee9e40-e87d-4392-ad7d-84e450e7599e.StreamAnalyticsCredential",
+  "ScriptType": "Input"
+}

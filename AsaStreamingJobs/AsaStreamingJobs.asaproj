@@ -1,0 +1,90 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>1fd106dd-c701-4efa-9aa4-7146378f30c5</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>AsaStreamingJobs</AssemblyName>
+    <StartFile>Script.asaql</StartFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ASATargetsFilePath>$(AppData)\Microsoft\DataLake\MsBuild\1.0\StreamAnalytics.targets</ASATargetsFilePath>
+    <Name>AsaStreamingJobs</Name>
+    <RootNamespace>AsaStreamingJobs</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="Script.asaql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Configure Include="Functions\applyRuleFilter.js">
+      <SubType>JSFunctionCode</SubType>
+    </Configure>
+    <Configure Include="Functions\applyRuleFilter.js.json">
+      <SubType>JSFunctionConfig</SubType>
+      <DependentUpon>Functions\applyRuleFilter.js</DependentUpon>
+    </Configure>
+    <Configure Include="Functions\flattenMeasurements.js">
+      <SubType>JSFunctionCode</SubType>
+    </Configure>
+    <Configure Include="Functions\flattenMeasurements.js.json">
+      <SubType>JSFunctionConfig</SubType>
+      <DependentUpon>Functions\flattenMeasurements.js</DependentUpon>
+    </Configure>
+    <Configure Include="Functions\removeUnusedProperties.js">
+      <SubType>JSFunctionCode</SubType>
+    </Configure>
+    <Configure Include="Functions\removeUnusedProperties.js.json">
+      <SubType>JSFunctionConfig</SubType>
+      <DependentUpon>Functions\removeUnusedProperties.js</DependentUpon>
+    </Configure>
+    <Configure Include="Inputs\DeviceGroups.json">
+      <SubType>Input</SubType>
+    </Configure>
+    <Configure Include="Inputs\DeviceTelemetry.json">
+      <SubType>Input</SubType>
+    </Configure>
+    <Configure Include="Inputs\local_DeviceGroups.json">
+      <SubType>InputMock</SubType>
+    </Configure>
+    <Configure Include="Inputs\local_DeviceTelemetry.json">
+      <SubType>InputMock</SubType>
+    </Configure>
+    <Configure Include="Inputs\local_Rules.json">
+      <SubType>InputMock</SubType>
+    </Configure>
+    <Configure Include="Inputs\Rules.json">
+      <SubType>Input</SubType>
+    </Configure>
+    <Configure Include="Outputs\Output.json">
+      <SubType>Output</SubType>
+    </Configure>
+    <Configure Include="JobConfig.json">
+      <SubType>JobConfig</SubType>
+    </Configure>
+    <Configure Include="Samples\devicetelemetry.json">
+      <SubType>Unknown</SubType>
+    </Configure>
+    <Configure Include="Samples\rules.json">
+      <SubType>Unknown</SubType>
+    </Configure>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Inputs" />
+    <Folder Include="Functions" />
+    <Folder Include="Samples" />
+    <Folder Include="Outputs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Samples\devicegroups.csv">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(ASATargetsFilePath)" />
+</Project>

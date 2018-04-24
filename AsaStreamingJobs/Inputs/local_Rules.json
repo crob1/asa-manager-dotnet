@@ -1,0 +1,8 @@
+﻿{
+  "InputAlias": "Rules",
+  "Type": "Reference data",
+  "Format": "Json",
+  "FilePath": "D:\\workspace\\github\\Azure\\asa-manager-dotnet\\AsaStreamingJobs\\Samples\\rules.json",
+  "Sample": "{\r\n  \"Conditions\": [\r\n    {\r\n      \"Aggregator\": \"AVG\",\r\n      \"Field\": \"temperature\",\r\n      \"Operator\": \"GreaterThan\",\r\n      \"Value\": \"70\"\r\n    },\r\n    {\r\n      \"Aggregator\": \"AVG\",\r\n      \"Field\": \"pressure\",\r\n      \"Operator\": \"GreaterThan\",\r\n      \"Value\": \"250\"\r\n    }\r\n  ],\r\n  \"AggregationWindow\": \"tumblingwindow5minutes\",\r\n  \"DateCreated\": \"2018-03-19T08:36:00-07:00\",\r\n  \"DateModified\": \"2018-03-19T08:36:00-07:00\",\r\n  \"Description\": \"temperature > 73 And pressure > 250\",\r\n  \"ETag\": \"*\",\r\n  \"Enabled\": true,\r\n  \"GroupId\": \"default_Chillers\",\r\n  \"Id\": \"default_Chiller_Pressure_High\",\r\n  \"Name\": \"Chiller temperature too high and pressure too high\",\r\n  \"Severity\": \"critical\",\r\n  \"__rulefilterjs\": \"return record.__aggregates.temperature.avg > 70 && record.__aggregates.pressure.avg > 250 ? true : false;\"\r\n}",
+  "ScriptType": "InputMock"
+}

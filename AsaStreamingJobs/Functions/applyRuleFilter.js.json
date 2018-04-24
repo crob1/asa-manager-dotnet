@@ -1,0 +1,12 @@
+﻿{
+  "JSCode": "// Apply rule filter on the incoming record\r\nfunction main(record) {\r\n    let ruleFunction = new Function('record', record.__rulefilterjs);\r\n    return ruleFunction(record);\r\n}",
+  "Name": "applyRuleFilter",
+  "OutputType": "any",
+  "FunctionInputs": [
+    {
+      "DataType": "record",
+      "IsConfigurationParameter": null
+    }
+  ],
+  "ScriptType": "JSFunction"
+}

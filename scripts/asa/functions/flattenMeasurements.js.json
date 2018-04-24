@@ -1,0 +1,12 @@
+﻿{
+  "JSCode": "// Flatten the aggregates from an array to a record\r\nfunction main(record) {\r\n\r\n    let flatRecord = {\r\n        '__deviceid': record.__deviceid,\r\n        '__ruleid': record.__ruleid\r\n    };\r\n\r\n    record.measurements.forEach(function (item) {\r\n        flatRecord[item.measurementname] = {\r\n            'avg': item.avg,\r\n            'max': item.max,\r\n            'min': item.min,\r\n            'count': item.count\r\n        };\r\n    });\r\n\r\n    return flatRecord;\r\n}",
+  "Name": "flattenMeasurements",
+  "OutputType": "any",
+  "FunctionInputs": [
+    {
+      "DataType": "record",
+      "IsConfigurationParameter": null
+    }
+  ],
+  "ScriptType": "JSFunction"
+}

@@ -1,0 +1,117 @@
+﻿WITH TelemetryAndRules AS
+(
+    SELECT
+        T.IotHub.ConnectionDeviceId as __deviceid,
+        T.PartitionId as __partitionid,
+        T.EventEnqueuedUtcTime as __receivedtime,
+        R.Id as __ruleid,
+        R.AggregationWindow,
+        Conditions.ArrayValue.Field as MeasurementName,
+        GetRecordPropertyValue(T, Conditions.ArrayValue.Field) as MeasurementValue
+    FROM
+        DeviceTelemetry T PARTITION BY PartitionId TIMESTAMP BY T.EventEnqueuedUtcTime
+        JOIN DeviceGroups G ON T.IoTHub.ConnectionDeviceId = G.DeviceId
+        JOIN Rules R ON R.GroupId = G.GroupId
+        CROSS APPLY GetArrayElements(R.Conditions) AS Conditions
+),
+WindowAggregates5Min AS (
+    SELECT
+        TA.__deviceid,
+        TA.__ruleid,
+        TA.__partitionid,
+        TA.MeasurementName,
+        AVG(TA.MeasurementValue),
+        MAX(TA.MeasurementValue),
+        MIN(TA.MeasurementValue),
+        COUNT(TA.MeasurementValue),
+        MAX(DATEDIFF(millisecond, '1970-01-01T00:00:00Z', TA.__receivedtime)) as __lastReceivedTime
+    FROM
+        TelemetryAndRules TA PARTITION BY __partitionid
+    WHERE
+        TA.AggregationWindow='tumblingwindow5minutes'
+    GROUP BY
+        TA.__deviceid,
+        TA.__ruleid,
+        TA.__partitionid,
+        TA.MeasurementName,
+        TumblingWindow(minute, 5)
+),
+GroupAggregatedMeasurements AS (
+    SELECT
+        WA.__deviceid,
+        WA.__ruleid,
+        WA.__partitionid,
+        WA.__lastReceivedTime,
+        Collect() AS Measurements
+    FROM
+        WindowAggregates5Min WA PARTITION BY __partitionid
+    GROUP BY
+        WA.__deviceid,
+        WA.__ruleid,
+        WA.__partitionid,
+        WA.__lastReceivedTime,
+        System.Timestamp
+),
+FlatAggregatedMeasurements AS (
+    SELECT
+        GA.__deviceid,
+        GA.__ruleid,
+        GA.__lastReceivedTime,
+        udf.flattenMeasurements(GA) AS __aggregates
+    FROM
+        GroupAggregatedMeasurements GA PARTITION BY __partitionid
+),
+CombineRuleFilters AS (
+    SELECT
+        FA.__deviceid,
+        FA.__ruleid,
+        FA.__aggregates,
+        FA.__lastReceivedTime,
+        R.Description as __description,
+        R.Severity as __severity,
+        R.__rulefilterjs as __rulefilterjs
+    FROM
+        FlatAggregatedMeasurements FA PARTITION BY __partitionid
+        JOIN Rules R ON FA.__ruleid=R.Id
+),
+ApplyRuleFilters AS
+(
+    SELECT
+        CR.*
+    FROM
+        CombineRuleFilters CR PARTITION BY __partitionid
+    WHERE TRY_CAST(udf.applyRuleFilter(CR) AS bigint) = 1
+)
+
+SELECT
+    1 as [doc.schemaVersion],
+    'alarm' as [doc.schema],
+    'open' as [status],
+    '1Rule-1Device-NMessage' as [logic],
+    DATEDIFF(millisecond, '1970-01-01T00:00:00Z', System.Timestamp) as created,
+    DATEDIFF(millisecond, '1970-01-01T00:00:00Z', System.Timestamp) as modified,
+    AR.__description as [rule.description],
+    AR.__severity as [rule.severity],
+    AR.__ruleid as [rule.id],
+    AR.__deviceId as [device.id],
+    AR.__aggregates,
+    AR.__lastReceivedTime as [device.msg.received]
+INTO
+    Alarms
+FROM
+    ApplyRuleFilters AR PARTITION BY __partitionid
+
+SELECT
+        CONCAT(T.IoTHub.ConnectionDeviceId, ';', CAST(DATEDIFF(millisecond, '1970-01-01T00:00:00Z', T.EventEnqueuedUtcTime) AS nvarchar(max))) as id,
+        1 as [doc.schemaVersion],
+        'd2cmessage' as [doc.schema],
+        T.IoTHub.ConnectionDeviceId as [device.id],
+        'device-sensors;v1' as [device.msg.schema],
+        DATEDIFF(millisecond, '1970-01-01T00:00:00Z', System.Timestamp) as [device.msg.created],
+        DATEDIFF(millisecond, '1970-01-01T00:00:00Z', T.EventEnqueuedUtcTime) as [device.msg.received],
+        'StreamingJobs' as [data.schema],
+        udf.removeUnusedProperties(T) as Data
+INTO
+    Messages
+FROM
+    DeviceTelemetry T PARTITION BY PartitionId TIMESTAMP BY T.EventEnqueuedUtcTime

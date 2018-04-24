@@ -1,0 +1,29 @@
+[
+  {
+    "Conditions": [
+      {
+        "Aggregator": "AVG",
+        "Field": "temperature",
+        "Operator": "GreaterThan",
+        "Value": "70"
+      },
+      {
+        "Aggregator": "AVG",
+        "Field": "pressure",
+        "Operator": "GreaterThan",
+        "Value": "250"
+      }
+    ],
+    "AggregationWindow": "tumblingwindow5minutes",
+    "DateCreated": "2018-03-19T15:36:00+00:00",
+    "DateModified": "2018-03-19T15:36:00+00:00",
+    "Description": "temperature > 73 And pressure > 250",
+    "ETag": "*",
+    "Enabled": true,
+    "GroupId": "default_Chillers",
+    "Id": "default_Chiller_Pressure_High",
+    "Name": "Chiller temperature too high and pressure too high",
+    "Severity": "critical",
+    "__rulefilterjs": "return record.__aggregates.temperature.avg > 70 && record.__aggregates.pressure.avg > 250 ? true : false;"
+  }
+]

@@ -63,7 +63,7 @@ namespace Microsoft.Azure.IoTSolutions.AsaManager.DeviceGroupsAgent
         {
             this.log.Info("Device Groups Agent running", () => { });
 
-            // ensure will do initial write even if there are no device group definitions
+            // ensure will do initial write even if there are no device group definitions.
             bool forceWrite = true;
 
             if (!runState.IsCancellationRequested)

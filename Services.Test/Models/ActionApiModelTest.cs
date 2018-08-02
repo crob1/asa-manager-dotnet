@@ -40,7 +40,7 @@ namespace Services.Test.Models
             x = new ActionApiModel()
             {
                 ActionType = Guid.NewGuid().ToString(),
-                 Parameters = new Dictionary<string, object>()
+                Parameters = new Dictionary<string, object>()
                 {
                     {"Template", "Sample Template" },
                     {"Email", new List<string>() { "sampleEmail1@gmail.com", "sampleEmail2@gmail.com"} }

@@ -77,7 +77,7 @@ namespace Microsoft.Azure.IoTSolutions.AsaManager.TelemetryRulesAgent.Models
                 { "<", "<" },
                 { "LessThanOrEqual", "<=" },
                 { "<=", "<=" },
-                { "Equals", "=" },
+                { "Equals", "==" },
                 { "=", "=" },
                 { "==", "=" },
             };
